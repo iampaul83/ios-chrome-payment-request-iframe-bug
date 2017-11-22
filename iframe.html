@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>test</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <script>
+        if (!window.PaymentRequest) {
+            alert('browser does not support PaymentRequest')
+        } else {
+            showPaymentRequest()
+        }
+        function showPaymentRequest () {
+            var supportedInstruments = [{
+                supportedMethods: ['basic-card']
+            }];
+            var details = {
+                displayItems: [{
+                    label: 'iPhone8',
+                    amount: {
+                        currency: 'TWD',
+                        value: '1.00'
+                    }
+                }],
+                total: {
+                    label: '總金額',
+                    amount: {
+                        currency: 'TWD',
+                        value: '1.00'
+                    }
+                }
+            };
+            var request = new PaymentRequest(supportedInstruments, details)
+            request.show().then((res) => {
+                request.complete('success')
+            }).catch((err) => {
+                request.complete('fail')
+            })
+        }
+        </script>
+    </body>
+</html>
